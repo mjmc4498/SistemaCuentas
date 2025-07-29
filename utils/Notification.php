@@ -1,10 +1,15 @@
 <?php
+/**
+ * Class Notification
+ *
+ * Handles flash notifications.
+ */
 class Notification {
     /**
-     * Establece una notificación flash.
+     * Sets a flash notification.
      *
-     * @param string $type El tipo de notificación (e.g., 'success', 'error', 'info').
-     * @param string $message El mensaje de la notificación.
+     * @param string $type The type of notification (e.g., 'success', 'error', 'info').
+     * @param string $message The notification message.
      */
     public static function set($type, $message) {
         Session::set('notification', [
@@ -14,7 +19,7 @@ class Notification {
     }
 
     /**
-     * Muestra la notificación si existe y luego la elimina.
+     * Displays the notification if it exists and then unsets it.
      */
     public static function display() {
         if (Session::get('notification')) {

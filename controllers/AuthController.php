@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class AuthController
+ *
+ * Handles all authentication-related actions.
+ */
 require_once '../includes/database.php';
 require_once '../models/User.php';
 require_once '../utils/Session.php';
@@ -9,12 +14,23 @@ require_once '../utils/Notification.php';
 Session::start();
 
 class AuthController {
+    /**
+     * @var User The User model.
+     */
     private $userModel;
 
+    /**
+     * AuthController constructor.
+     *
+     * @param PDO $pdo The database connection object.
+     */
     public function __construct($pdo) {
         $this->userModel = new User($pdo);
     }
 
+    /**
+     * Handles the user login.
+     */
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!CSRF::validateToken($_POST['csrf_token'])) {
@@ -23,8 +39,8 @@ class AuthController {
                 exit;
             }
 
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
 
             $user = $this->userModel->findByEmail($email);
 
@@ -46,15 +62,21 @@ class AuthController {
         }
     }
 
+    /**
+     * Handles the user logout.
+     */
     public function logout() {
         Session::destroy();
         header('Location: ../views/login.php');
         exit;
     }
 
+    /**
+     * Handles the "forgot password" request.
+     */
     public function forgotPassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
+            $email = htmlspecialchars($_POST['email']);
             $user = $this->userModel->findByEmail($email);
 
             if ($user) {
@@ -76,6 +98,9 @@ class AuthController {
         }
     }
 
+    /**
+     * Handles the password reset request.
+     */
     public function resetPassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $token = $_POST['token'];

@@ -1,7 +1,12 @@
 <?php
+/**
+ * Class CSRF
+ *
+ * Handles CSRF token generation and validation.
+ */
 class CSRF {
     /**
-     * Genera un nuevo token CSRF y lo guarda en la sesión.
+     * Generates a new CSRF token and stores it in the session.
      */
     public static function generateToken() {
         if (empty($_SESSION['csrf_token'])) {
@@ -10,19 +15,19 @@ class CSRF {
     }
 
     /**
-     * Obtiene el token CSRF actual.
+     * Gets the current CSRF token.
      *
-     * @return string El token CSRF.
+     * @return string The CSRF token.
      */
     public static function getToken() {
         return $_SESSION['csrf_token'];
     }
 
     /**
-     * Valida el token CSRF proporcionado.
+     * Validates the provided CSRF token.
      *
-     * @param string $token El token a validar.
-     * @return bool True si el token es válido, false si no.
+     * @param string $token The token to validate.
+     * @return bool True if the token is valid, false otherwise.
      */
     public static function validateToken($token) {
         if (isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token)) {

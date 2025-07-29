@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class ReportController
+ *
+ * Handles all actions related to reports and statistics.
+ */
 require_once '../includes/database.php';
 require_once '../models/Purchase.php';
 require_once '../models/User.php';
@@ -11,12 +16,20 @@ class ReportController {
     private $userModel;
     private $pdo;
 
+    /**
+     * ReportController constructor.
+     *
+     * @param PDO $pdo The database connection object.
+     */
     public function __construct($pdo) {
         $this->pdo = $pdo;
         $this->purchaseModel = new Purchase($pdo);
         $this->userModel = new User($pdo);
     }
 
+    /**
+     * Displays the reports page.
+     */
     public function index() {
         $filters = [
             'start_date' => $_GET['start_date'] ?? null,
@@ -35,6 +48,9 @@ class ReportController {
         exit;
     }
 
+    /**
+     * Handles the download of the report in Excel format.
+     */
     public function downloadExcel() {
         // Lógica para descargar reporte en Excel
         Notification::set('info', 'Funcionalidad de descarga de Excel no implementada aún.');
@@ -42,6 +58,9 @@ class ReportController {
         exit;
     }
 
+    /**
+     * Handles the download of the report in PDF format.
+     */
     public function downloadPdf() {
         // Lógica para descargar reporte en PDF
         Notification::set('info', 'Funcionalidad de descarga de PDF no implementada aún.');

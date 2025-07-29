@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class DashboardController
+ *
+ * Handles all actions related to the user dashboard.
+ */
 require_once '../includes/database.php';
 require_once '../models/User.php';
 require_once '../models/Account.php';
@@ -10,9 +15,14 @@ Session::start();
 class DashboardController {
     private $userModel;
     private $accountModel;
-    private $purchaseModel;
+    private private $purchaseModel;
     private $pdo;
 
+    /**
+     * DashboardController constructor.
+     *
+     * @param PDO $pdo The database connection object.
+     */
     public function __construct($pdo) {
         $this->pdo = $pdo;
         $this->userModel = new User($pdo);
@@ -20,6 +30,9 @@ class DashboardController {
         $this->purchaseModel = new Purchase($pdo);
     }
 
+    /**
+     * Displays the dashboard based on the user's role.
+     */
     public function index() {
         $rol = Session::get('user_rol');
         $user_id = Session::get('user_id');

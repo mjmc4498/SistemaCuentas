@@ -1,4 +1,9 @@
 <?php
+/**
+ * Class ShopController
+ *
+ * Handles all actions related to the shop, including the catalog, cart, and checkout.
+ */
 require_once '../includes/database.php';
 require_once '../models/Account.php';
 require_once '../models/Purchase.php';
@@ -12,18 +17,29 @@ class ShopController {
     private $purchaseModel;
     private $pdo;
 
+    /**
+     * ShopController constructor.
+     *
+     * @param PDO $pdo The database connection object.
+     */
     public function __construct($pdo) {
         $this->pdo = $pdo;
         $this->accountModel = new Account($pdo);
         $this->purchaseModel = new Purchase($pdo);
     }
 
+    /**
+     * Displays the catalog page.
+     */
     public function index() {
         // Lógica para mostrar el catálogo
         header('Location: ../views/catalog.php');
         exit;
     }
 
+    /**
+     * Handles adding an item to the cart.
+     */
     public function addToCart() {
         // Lógica para agregar al carrito
         Notification::set('success', 'Producto agregado al carrito (simulación).');
@@ -31,6 +47,9 @@ class ShopController {
         exit;
     }
 
+    /**
+     * Handles removing an item from the cart.
+     */
     public function removeFromCart() {
         // Lógica para remover del carrito
         Notification::set('success', 'Producto eliminado del carrito (simulación).');
@@ -38,6 +57,9 @@ class ShopController {
         exit;
     }
 
+    /**
+     * Handles the checkout process.
+     */
     public function checkout() {
         $payment_method = $_GET['method'] ?? 'paypal'; // Por defecto, paypal
         // Lógica para procesar el pago
@@ -46,6 +68,9 @@ class ShopController {
         exit;
     }
 
+    /**
+     * Displays the purchase history page.
+     */
     public function purchaseHistory() {
         // Lógica para mostrar el historial de compras
         header('Location: ../views/purchase_history.php');
