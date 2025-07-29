@@ -85,4 +85,51 @@ document.addEventListener('DOMContentLoaded', function() {
             themeToggle.textContent = 'Modo Oscuro';
         }
     });
+
+    // Inicialización de gráficas en la página de reportes
+    const salesByPlatformCtx = document.getElementById('salesByPlatformChart')?.getContext('2d');
+    if (salesByPlatformCtx) {
+        new Chart(salesByPlatformCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Netflix', 'HBO', 'Disney+'],
+                datasets: [{
+                    label: 'Ventas por Plataforma',
+                    data: [12, 19, 3],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                }]
+            }
+        });
+    }
+
+    const topSellersCtx = document.getElementById('topSellersChart')?.getContext('2d');
+    if (topSellersCtx) {
+        new Chart(topSellersCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Vendedor1', 'Vendedor2', 'Vendedor3'],
+                datasets: [{
+                    label: 'Ventas por Vendedor',
+                    data: [30, 25, 15],
+                    backgroundColor: '#4BC0C0'
+                }]
+            }
+        });
+    }
+
+    const monthlyIncomeCtx = document.getElementById('monthlyIncomeChart')?.getContext('2d');
+    if (monthlyIncomeCtx) {
+        new Chart(monthlyIncomeCtx, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+                datasets: [{
+                    label: 'Ingresos Mensuales',
+                    data: [1200, 1500, 1300, 1800],
+                    borderColor: '#FF9F40',
+                    fill: false
+                }]
+            }
+        });
+    }
 });

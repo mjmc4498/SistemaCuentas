@@ -138,5 +138,16 @@ class User {
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM usuarios");
         return $stmt->fetchColumn();
     }
+
+    public function getTopSellers($filters = []) {
+        $sql = "SELECT u.nombre_usuario, COUNT(v.id) as total_ventas
+                FROM ventas v
+                JOIN usuarios u ON v.id_vendedor = u.id";
+        // Lógica de filtros de fecha aquí
+        $sql .= " GROUP BY u.nombre_usuario ORDER BY total_ventas DESC LIMIT 10";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 ?>

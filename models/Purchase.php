@@ -34,5 +34,26 @@ class Purchase {
         $stmt->execute([$seller_id]);
         return $stmt->fetchColumn();
     }
+
+    public function getSalesByPlatform($filters = []) {
+        $sql = "SELECT c.plataforma, SUM(v.precio) as total
+                FROM ventas v
+                JOIN cuentas_streaming c ON v.id_cuenta = c.id";
+        // Lógica de filtros de fecha aquí
+        $sql .= " GROUP BY c.plataforma";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getMonthlyIncome($filters = []) {
+        $sql = "SELECT DATE_FORMAT(fecha_venta, '%Y-%m') as mes, SUM(precio) as total
+                FROM ventas";
+        // Lógica de filtros de fecha aquí
+        $sql .= " GROUP BY mes";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 ?>
