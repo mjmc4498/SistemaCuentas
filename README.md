@@ -26,10 +26,10 @@ El esquema de la base de datos se define en el archivo `schema.sql`. Este archiv
 
 ## Instalación
 
-1.  Clona el repositorio: `git clone <repository-url>`
-2.  Importa el esquema de la base de datos `schema.sql` en tu servidor de base de datos (e.g., MySQL, MariaDB).
-3.  Crea un archivo `.env` a partir del `.env.example` y configura tus credenciales de base de datos.
-4.  Apunta tu servidor web a la raíz del proyecto.
+1.  Sube los archivos del proyecto a tu servidor.
+2.  Abre tu navegador y ve a `http://<tu-dominio>/install.php`.
+3.  Sigue las instrucciones en pantalla para configurar la base de datos y crear la cuenta de administrador.
+4.  Una vez completada la instalación, los archivos de instalación se eliminarán automáticamente por seguridad.
 
 ## Uso
 
