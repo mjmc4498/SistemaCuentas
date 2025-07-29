@@ -58,14 +58,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Placeholder para la pasarela de pago
-    document.getElementById('checkout-btn')?.addEventListener('click', () => {
+    function handleCheckout(method) {
         if (cart.length > 0) {
-            alert('Procediendo al pago... (Simulación)');
-            // Aquí iría la integración con PayPal, Stripe, etc.
-            // Por ahora, redirigimos a una página de éxito de compra.
-            window.location.href = '../controllers/ShopController.php?action=checkout';
+            alert(`Procediendo al pago con ${method}... (Simulación)`);
+            window.location.href = `../controllers/ShopController.php?action=checkout&method=${method}`;
         } else {
             alert('El carrito está vacío.');
         }
-    });
+    }
+
+    document.getElementById('checkout-btn-paypal')?.addEventListener('click', () => handleCheckout('paypal'));
+    document.getElementById('checkout-btn-yape')?.addEventListener('click', () => handleCheckout('yape'));
+    document.getElementById('checkout-btn-plin')?.addEventListener('click', () => handleCheckout('plin'));
 });

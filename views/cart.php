@@ -37,7 +37,9 @@ check_role('cliente'); // O cualquier rol que pueda comprar
             <a href="catalog.php" class="btn btn-secondary">Seguir Comprando</a>
             <div>
                 <!-- Placeholder para la pasarela de pago -->
-                <button id="checkout-btn" class="btn btn-primary">Proceder al Pago</button>
+                <button id="checkout-btn-paypal" class="btn btn-primary">Pagar con PayPal</button>
+                <button id="checkout-btn-yape" class="btn btn-info">Pagar con Yape</button>
+                <button id="checkout-btn-plin" class="btn btn-success">Pagar con Plin</button>
             </div>
         </div>
     </div>

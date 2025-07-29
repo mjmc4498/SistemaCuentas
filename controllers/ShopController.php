@@ -39,8 +39,9 @@ class ShopController {
     }
 
     public function checkout() {
+        $payment_method = $_GET['method'] ?? 'paypal'; // Por defecto, paypal
         // Lógica para procesar el pago
-        Notification::set('success', 'Compra realizada con éxito (simulación).');
+        Notification::set('success', "Compra realizada con $payment_method (simulación).");
         header('Location: ../views/purchase_history.php');
         exit;
     }
