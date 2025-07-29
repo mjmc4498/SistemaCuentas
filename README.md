@@ -24,6 +24,31 @@ El esquema de la base de datos se define en el archivo `schema.sql`. Este archiv
 - **Conexión a la Base de Datos**: La configuración de la conexión a la base de datos se encuentra en `includes/database.php`. Debes modificar este archivo con las credenciales reales de tu base de datos.
 - **Multi-idioma**: Los archivos de traducción se encuentran en el directorio `/lang`. Actualmente, se soportan inglés (`en.json`) y español (`es.json`).
 
+## Instalación
+
+1.  Clona el repositorio: `git clone <repository-url>`
+2.  Importa el esquema de la base de datos `schema.sql` en tu servidor de base de datos (e.g., MySQL, MariaDB).
+3.  Crea un archivo `.env` a partir del `.env.example` y configura tus credenciales de base de datos.
+4.  Apunta tu servidor web a la raíz del proyecto.
+
+## Uso
+
+- **Login:** Accede a `views/login.php` para iniciar sesión.
+- **Dashboard:** Una vez logueado, serás redirigido a tu dashboard personalizado según tu rol.
+- **Gestión de Usuarios y Cuentas:** Los administradores pueden gestionar usuarios y cuentas desde los enlaces en su dashboard.
+
+## Despliegue
+
+Para desplegar esta aplicación en un servidor de hosting (cPanel, VPS, etc.), sigue estos pasos:
+
+1.  **Sube los archivos:** Sube todos los archivos del proyecto a tu servidor.
+2.  **Configura la Base de Datos:** Crea una base de datos y un usuario en tu servidor de hosting e importa el `schema.sql`.
+3.  **Configura el archivo `.env`:** Crea un archivo `.env` en la raíz del proyecto y añade las credenciales de tu base de datos de producción. Asegúrate de que este archivo no sea accesible públicamente.
+4.  **Permisos de Archivos:** Asegúrate de que los directorios que necesitan permisos de escritura (como `logs`) los tengan.
+5.  **Apunta tu Dominio:** Configura tu dominio o subdominio para que apunte a la raíz del proyecto.
+
 ## Dependencias
 
-(Sección para futuras dependencias, como librerías de PHP o paquetes de JavaScript)
+- PHP 8.0 o superior
+- Servidor de base de datos MySQL o MariaDB
+- Servidor web (Apache, Nginx, etc.)
