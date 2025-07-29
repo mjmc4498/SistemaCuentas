@@ -16,29 +16,63 @@ class AccountController {
     }
 
     public function index() {
-        // Lógica para mostrar la lista de cuentas
+        $accounts = $this->accountModel->getAll($_GET);
+        Session::set('accounts', $accounts);
         header('Location: ../views/manage_accounts.php');
         exit;
     }
 
     public function create() {
-        // Lógica para crear una nueva cuenta
-        Notification::set('success', 'Cuenta creada (simulación).');
-        header('Location: ../views/manage_accounts.php');
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'plataforma' => $_POST['plataforma'],
+                'login' => $_POST['login'],
+                'tipo_cuenta' => $_POST['tipo_cuenta'],
+                'estado' => $_POST['estado'],
+                'id_usuario_propietario' => $_POST['id_usuario_propietario']
+            ];
+
+            if ($this->accountModel->create($data)) {
+                Notification::set('success', 'Cuenta creada exitosamente.');
+            } else {
+                Notification::set('error', 'Error al crear la cuenta.');
+            }
+            header('Location: ../controllers/AccountController.php?action=index');
+            exit;
+        }
     }
 
     public function update() {
-        // Lógica para actualizar una cuenta
-        Notification::set('success', 'Cuenta actualizada (simulación).');
-        header('Location: ../views/manage_accounts.php');
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $data = [
+                'plataforma' => $_POST['plataforma'],
+                'login' => $_POST['login'],
+                'tipo_cuenta' => $_POST['tipo_cuenta'],
+                'estado' => $_POST['estado'],
+                'id_usuario_propietario' => $_POST['id_usuario_propietario']
+            ];
+
+            if ($this->accountModel->update($id, $data)) {
+                Notification::set('success', 'Cuenta actualizada exitosamente.');
+            } else {
+                Notification::set('error', 'Error al actualizar la cuenta.');
+            }
+            header('Location: ../controllers/AccountController.php?action=index');
+            exit;
+        }
     }
 
     public function delete() {
-        // Lógica para eliminar una cuenta
-        Notification::set('success', 'Cuenta eliminada (simulación).');
-        header('Location: ../views/manage_accounts.php');
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            if ($this->accountModel->delete($id)) {
+                Notification::set('success', 'Cuenta eliminada exitosamente.');
+            } else {
+                Notification::set('error', 'Error al eliminar la cuenta.');
+            }
+        }
+        header('Location: ../controllers/AccountController.php?action=index');
         exit;
     }
 

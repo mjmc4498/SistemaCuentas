@@ -1,7 +1,11 @@
 <?php
 require_once '../includes/auth_middleware.php';
+require_once '../utils/Session.php';
 // Requerir permiso para ver cuentas
 check_permission('view_accounts');
+Session::init();
+$accounts = Session::get('accounts') ?? [];
+Session::unset('accounts'); // Limpiar para no mostrar datos antiguos en recargas
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -61,19 +65,26 @@ check_permission('view_accounts');
                 </tr>
             </thead>
             <tbody>
-                <!-- Datos de ejemplo, se cargarán dinámicamente -->
-                <tr>
-                    <td>1</td>
-                    <td>Netflix</td>
-                    <td>user1@example.com</td>
-                    <td>Premium</td>
-                    <td><span class="badge bg-success">Disponible</span></td>
-                    <td>Vendedor1</td>
-                    <td>
-                        <a href="edit_account.php?id=1" class="btn btn-sm btn-warning">Editar</a>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="1">Eliminar</button>
-                    </td>
-                </tr>
+                <?php if (empty($accounts)): ?>
+                    <tr>
+                        <td colspan="7" class="text-center">No hay cuentas para mostrar.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($accounts as $account): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($account['id']); ?></td>
+                            <td><?php echo htmlspecialchars($account['plataforma']); ?></td>
+                            <td><?php echo htmlspecialchars($account['login']); ?></td>
+                            <td><?php echo htmlspecialchars($account['tipo_cuenta']); ?></td>
+                            <td><span class="badge bg-<?php echo $account['estado'] === 'disponible' ? 'success' : 'secondary'; ?>"><?php echo htmlspecialchars($account['estado']); ?></span></td>
+                            <td><?php echo htmlspecialchars($account['propietario'] ?? 'N/A'); ?></td>
+                            <td>
+                                <a href="edit_account.php?id=<?php echo $account['id']; ?>" class="btn btn-sm btn-warning">Editar</a>
+                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="<?php echo $account['id']; ?>">Eliminar</button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
