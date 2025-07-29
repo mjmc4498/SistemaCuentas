@@ -22,7 +22,19 @@ class Notification {
             $type = htmlspecialchars($notification['type']);
             $message = htmlspecialchars($notification['message']);
 
-            echo "<div class='alert alert-$type' role='alert'>$message</div>";
+            echo "
+            <div class='position-fixed bottom-0 end-0 p-3' style='z-index: 11'>
+                <div id='liveToast' class='toast show' role='alert' aria-live='assertive' aria-atomic='true'>
+                    <div class='toast-header'>
+                        <strong class='me-auto'>Notificación</strong>
+                        <button type='button' class='btn-close' data-bs-dismiss='toast' aria-label='Close'></button>
+                    </div>
+                    <div class='toast-body'>
+                        $message
+                    </div>
+                </div>
+            </div>
+            ";
 
             Session::unset('notification');
         }

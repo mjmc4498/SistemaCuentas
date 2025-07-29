@@ -82,6 +82,14 @@ class AccountController {
         header('Location: ../views/manage_accounts.php');
         exit;
     }
+
+    public function searchAccounts() {
+        if (isset($_GET['term'])) {
+            $term = $_GET['term'];
+            $accounts = $this->accountModel->getAll(['search' => $term]);
+            echo json_encode($accounts);
+        }
+    }
 }
 
 // Manejo de la acción solicitada

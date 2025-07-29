@@ -86,6 +86,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Manejo de modales de confirmación para usuarios
+    const suspendModal = document.getElementById('suspendModal');
+    suspendModal?.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const userId = button.dataset.id;
+        const confirmBtn = document.getElementById('suspend-confirm-btn');
+        confirmBtn.href = `../controllers/UserController.php?action=suspend&id=${userId}`;
+    });
+
+    const deleteUserModal = document.getElementById('deleteUserModal');
+    deleteUserModal?.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const userId = button.dataset.id;
+        const confirmBtn = document.getElementById('delete-user-confirm-btn');
+        confirmBtn.href = `../controllers/UserController.php?action=delete&id=${userId}`;
+    });
+
+    // Inicialización de toasts
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl)
+    });
+
+    // Autocompletado para la búsqueda
+    const searchInput = document.getElementById('search');
+    const searchResults = document.createElement('div');
+    searchResults.classList.add('list-group', 'position-absolute', 'w-100');
+    searchInput?.parentNode.appendChild(searchResults);
+
+    searchInput?.addEventListener('keyup', () => {
+        const term = searchInput.value;
+        if (term.length < 2) {
+            searchResults.innerHTML = '';
+            return;
+        }
+
+        fetch(`../controllers/AccountController.php?action=searchAccounts&term=${term}`)
+            .then(response => response.json())
+            .then(data => {
+                searchResults.innerHTML = '';
+                data.forEach(account => {
+                    const item = document.createElement('a');
+                    item.href = `edit_account.php?id=${account.id}`;
+                    item.classList.add('list-group-item', 'list-group-item-action');
+                    item.textContent = `${account.plataforma} - ${account.login}`;
+                    searchResults.appendChild(item);
+                });
+            });
+    });
+
     // Inicialización de gráficas en la página de reportes
     const salesByPlatformCtx = document.getElementById('salesByPlatformChart')?.getContext('2d');
     if (salesByPlatformCtx) {

@@ -23,3 +23,19 @@ body.theme-dark .btn-secondary {
     background-color: #6c757d;
     border-color: #6c757d;
 }
+
+/* Animaciones */
+.card {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
