@@ -1,6 +1,22 @@
 <?php
 class Session {
     /**
+     * Inicia la sesión y comprueba la expiración.
+     */
+    public static function init() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+            // 30 minutos de inactividad
+            session_unset();
+            session_destroy();
+            session_start();
+        }
+        $_SESSION['last_activity'] = time();
+    }
+    /**
      * Inicia la sesión si no ha sido iniciada ya.
      */
     public static function start() {
@@ -17,6 +33,7 @@ class Session {
      */
     public static function set($key, $value) {
         $_SESSION[$key] = $value;
+        $_SESSION['last_activity'] = time();
     }
 
     /**

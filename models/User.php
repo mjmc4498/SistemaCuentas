@@ -35,5 +35,28 @@ class User {
         );
         return $stmt->execute([$nombre_usuario, $email, $password_hash, $rol]);
     }
+
+    public function updateResetToken($email, $token, $expiration) {
+        $stmt = $this->pdo->prepare(
+            "UPDATE usuarios SET password_reset_token = ?, token_expiration = ? WHERE email = ?"
+        );
+        return $stmt->execute([$token, $expiration, $email]);
+    }
+
+    public function findUserByResetToken($token) {
+        $stmt = $this->pdo->prepare(
+            "SELECT * FROM usuarios WHERE password_reset_token = ? AND token_expiration > NOW()"
+        );
+        $stmt->execute([$token]);
+        return $stmt->fetch();
+    }
+
+    public function updatePassword($token, $password) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $this->pdo->prepare(
+            "UPDATE usuarios SET password_hash = ?, password_reset_token = NULL, token_expiration = NULL WHERE password_reset_token = ?"
+        );
+        return $stmt->execute([$password_hash, $token]);
+    }
 }
 ?>

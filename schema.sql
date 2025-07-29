@@ -8,7 +8,9 @@ CREATE TABLE usuarios (
     password_hash VARCHAR(255) NOT NULL,
     rol ENUM('admin', 'vendedor', 'cliente') NOT NULL,
     estado ENUM('activo', 'inactivo', 'suspendido') NOT NULL,
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    password_reset_token VARCHAR(255) DEFAULT NULL,
+    token_expiration DATETIME DEFAULT NULL
 );
 
 -- Tabla de cuentas de streaming

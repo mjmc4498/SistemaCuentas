@@ -1,17 +1,9 @@
-<?php
-<?php
-require_once '../utils/Session.php';
-require_once '../utils/CSRF.php';
-require_once '../utils/Notification.php';
-Session::start();
-CSRF::generateToken();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Recuperar Contraseña</title>
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
@@ -21,22 +13,15 @@ CSRF::generateToken();
             <div class="col-md-6">
                 <div class="card mt-5">
                     <div class="card-header">
-                        <h3>Iniciar Sesión</h3>
+                        <h3>Recuperar Contraseña</h3>
                     </div>
                     <div class="card-body">
-                        <?php Notification::display(); ?>
-                        <form action="../controllers/AuthController.php?action=login" method="POST">
-                            <input type="hidden" name="csrf_token" value="<?php echo CSRF::getToken(); ?>">
+                        <form action="../controllers/AuthController.php?action=forgotPassword" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a href="forgot_password.php" class="float-end">¿Olvidaste tu contraseña?</a>
+                            <button type="submit" class="btn btn-primary">Enviar Enlace de Recuperación</button>
                         </form>
                     </div>
                 </div>
