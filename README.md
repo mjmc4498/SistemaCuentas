@@ -26,10 +26,23 @@ El esquema de la base de datos se define en el archivo `schema.sql`. Este archiv
 
 ## Instalación
 
-1.  Sube los archivos del proyecto a tu servidor.
-2.  Abre tu navegador y ve a `http://<tu-dominio>/install.php`.
-3.  Sigue las instrucciones en pantalla para configurar la base de datos y crear la cuenta de administrador.
-4.  Una vez completada la instalación, los archivos de instalación se eliminarán automáticamente por seguridad.
+Este proyecto cuenta con un instalador web para simplificar el proceso de configuración inicial.
+
+1.  **Sube los archivos:** Sube todos los archivos del proyecto a tu servidor de hosting.
+2.  **Navega al instalador:** Abre tu navegador web y ve a la URL donde subiste los archivos, seguido de `/install.php`. Por ejemplo: `http://tudominio.com/install.php`.
+3.  **Configuración de la Base de Datos:**
+    *   **Host:** Generalmente `localhost`.
+    *   **Nombre de la Base de Datos:** El nombre de la base de datos que creaste en tu hosting.
+    *   **Usuario:** El usuario de la base de datos que creaste.
+    *   **Contraseña:** La contraseña del usuario de la base de datos.
+4.  **Creación de la Cuenta de Administrador:**
+    *   **Nombre de Usuario:** Elige un nombre de usuario para la cuenta de administrador principal.
+    *   **Email:** Introduce un correo electrónico válido para el administrador.
+    *   **Contraseña:** Elige una contraseña segura.
+5.  **Finalizar la Instalación:** Haz clic en el botón "Instalar". El script creará el archivo de configuración `.env`, importará la estructura de la base de datos y creará tu cuenta de administrador.
+6.  **Seguridad:** Por motivos de seguridad, los archivos `install.php` y `InstallerController.php` se eliminarán automáticamente al finalizar la instalación.
+
+Una vez completado, serás redirigido a la página de login, donde podrás iniciar sesión con la cuenta de administrador que acabas de crear.
 
 ## Uso
 
