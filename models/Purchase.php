@@ -21,5 +21,18 @@ class Purchase {
         $stmt->execute([$user_id]);
         return $stmt->fetchAll();
     }
+
+    public function getTotalSales() {
+        $stmt = $this->pdo->query("SELECT SUM(total) FROM compras");
+        return $stmt->fetchColumn();
+    }
+
+    public function getSalesBySeller($seller_id) {
+        $stmt = $this->pdo->prepare("SELECT SUM(v.precio) FROM ventas v
+                                     JOIN cuentas_streaming c ON v.id_cuenta = c.id
+                                     WHERE c.id_usuario_propietario = ?");
+        $stmt->execute([$seller_id]);
+        return $stmt->fetchColumn();
+    }
 }
 ?>

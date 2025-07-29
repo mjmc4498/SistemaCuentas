@@ -78,5 +78,16 @@ class Account {
         $stmt = $this->pdo->prepare("UPDATE cuentas_streaming SET estado = ? WHERE id = ?");
         return $stmt->execute([$status, $id]);
     }
+
+    public function countAll() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM cuentas_streaming");
+        return $stmt->fetchColumn();
+    }
+
+    public function countByOwner($owner_id) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM cuentas_streaming WHERE id_usuario_propietario = ?");
+        $stmt->execute([$owner_id]);
+        return $stmt->fetchColumn();
+    }
 }
 ?>

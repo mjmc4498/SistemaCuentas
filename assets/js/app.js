@@ -70,4 +70,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkout-btn-paypal')?.addEventListener('click', () => handleCheckout('paypal'));
     document.getElementById('checkout-btn-yape')?.addEventListener('click', () => handleCheckout('yape'));
     document.getElementById('checkout-btn-plin')?.addEventListener('click', () => handleCheckout('plin'));
+
+    // Manejo del modo oscuro
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle?.addEventListener('click', () => {
+        const body = document.body;
+        if (body.classList.contains('theme-light')) {
+            body.classList.remove('theme-light');
+            body.classList.add('theme-dark');
+            themeToggle.textContent = 'Modo Claro';
+        } else {
+            body.classList.remove('theme-dark');
+            body.classList.add('theme-light');
+            themeToggle.textContent = 'Modo Oscuro';
+        }
+    });
 });

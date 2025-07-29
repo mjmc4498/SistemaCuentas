@@ -1,0 +1,25 @@
+/* Estilos para el modo claro */
+body.theme-light {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Estilos para el modo oscuro */
+body.theme-dark {
+    background-color: #212529;
+    color: #f8f9fa;
+}
+
+body.theme-dark .card {
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+body.theme-dark .table {
+    color: #f8f9fa;
+}
+
+body.theme-dark .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}

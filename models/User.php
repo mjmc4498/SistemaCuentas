@@ -133,5 +133,10 @@ class User {
 
         return array_unique(array_merge($role_permissions, $user_permissions));
     }
+
+    public function countAll() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM usuarios");
+        return $stmt->fetchColumn();
+    }
 }
 ?>
