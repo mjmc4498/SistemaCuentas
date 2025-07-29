@@ -42,7 +42,8 @@ CREATE TABLE ventas (
 -- Tabla de permisos (si se necesita un control de acceso más granular)
 CREATE TABLE permisos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_permiso VARCHAR(50) NOT NULL UNIQUE
+    nombre_permiso VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(255)
 );
 
 -- Tabla de roles_permisos (tabla intermedia para la relación muchos a muchos entre roles y permisos)
@@ -50,6 +51,15 @@ CREATE TABLE roles_permisos (
     rol ENUM('admin', 'vendedor', 'cliente') NOT NULL,
     id_permiso INT NOT NULL,
     PRIMARY KEY (rol, id_permiso),
+    FOREIGN KEY (id_permiso) REFERENCES permisos(id)
+);
+
+-- Tabla de usuario_permisos (para permisos específicos de usuario que sobreescriben los del rol)
+CREATE TABLE usuario_permisos (
+    id_usuario INT NOT NULL,
+    id_permiso INT NOT NULL,
+    PRIMARY KEY (id_usuario, id_permiso),
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
     FOREIGN KEY (id_permiso) REFERENCES permisos(id)
 );
 
