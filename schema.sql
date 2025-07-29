@@ -10,7 +10,9 @@ CREATE TABLE usuarios (
     estado ENUM('activo', 'inactivo', 'suspendido') NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     password_reset_token VARCHAR(255) DEFAULT NULL,
-    token_expiration DATETIME DEFAULT NULL
+    token_expiration DATETIME DEFAULT NULL,
+    referrer_id INT DEFAULT NULL,
+    referral_code VARCHAR(10) UNIQUE
 );
 
 -- Tabla de cuentas de streaming
@@ -81,4 +83,15 @@ CREATE TABLE compras (
     total DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (id_venta) REFERENCES ventas(id),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+-- Tabla de cupones
+CREATE TABLE cupones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+    tipo_descuento ENUM('porcentaje', 'fijo') NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    fecha_expiracion DATE,
+    usos_maximos INT,
+    usos_actuales INT DEFAULT 0
 );

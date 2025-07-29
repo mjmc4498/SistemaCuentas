@@ -30,8 +30,16 @@ check_role('cliente'); // O cualquier rol que pueda comprar
                 </tr>
             </tbody>
         </table>
-        <div class="d-flex justify-content-end">
-            <h4>Total: <span id="cart-total">$15.99</span></h4>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Código de Cupón" id="coupon-code">
+                    <button class="btn btn-outline-secondary" type="button" id="apply-coupon-btn">Aplicar</button>
+                </div>
+            </div>
+            <div class="col-md-6 text-end">
+                <h4>Total: <span id="cart-total">$15.99</span></h4>
+            </div>
         </div>
         <div class="d-flex justify-content-between mt-4">
             <a href="catalog.php" class="btn btn-secondary">Seguir Comprando</a>

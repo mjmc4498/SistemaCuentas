@@ -10,6 +10,7 @@ require_once '../utils/Session.php';
 require_once '../utils/CSRF.php';
 require_once '../models/Log.php';
 require_once '../utils/Notification.php';
+require_once '../utils/Mailer.php';
 
 Session::start();
 
@@ -84,10 +85,13 @@ class AuthController {
                 $expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
                 $this->userModel->updateResetToken($email, $token, $expiration);
 
-                // Simulación de envío de correo
-                // En una aplicación real, aquí se enviaría un correo electrónico con el enlace de restablecimiento.
-                // Por ahora, mostraremos un mensaje con el token.
-                Notification::set('success', "Se ha generado un token de recuperación: $token");
+                // Envío de correo
+                $reset_link = "http://localhost/views/reset_password.php?token=$token";
+                $subject = "Recuperación de Contraseña";
+                $body = "Haz clic en el siguiente enlace para restablecer tu contraseña: $reset_link";
+                Mailer::send($email, $subject, $body);
+
+                Notification::set('success', "Se ha enviado un enlace de recuperación a tu correo.");
                 header('Location: ../views/forgot_password.php');
                 exit;
             } else {

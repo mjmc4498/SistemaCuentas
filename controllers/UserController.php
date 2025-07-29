@@ -39,11 +39,27 @@ class UserController {
      * Handles the creation of a new user.
      */
     public function create() {
-        // Lógica para crear un nuevo usuario
-        // Se implementará en un paso posterior
-        Notification::set('success', 'Usuario creado (simulación).');
-        header('Location: ../views/manage_users.php');
-        exit;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'nombre_usuario' => htmlspecialchars($_POST['nombre_usuario']),
+                'email' => htmlspecialchars($_POST['email']),
+                'password' => htmlspecialchars($_POST['password']),
+                'rol' => htmlspecialchars($_POST['rol'])
+            ];
+
+            if ($this->userModel->create($data['nombre_usuario'], $data['email'], $data['password'], $data['rol'])) {
+                // Enviar email de bienvenida
+                $subject = "Bienvenido a nuestra plataforma";
+                $body = "Hola {$data['nombre_usuario']},\n\nGracias por registrarte en nuestra plataforma.";
+                Mailer::send($data['email'], $subject, $body);
+
+                Notification::set('success', 'Usuario creado exitosamente.');
+            } else {
+                Notification::set('error', 'Error al crear el usuario.');
+            }
+            header('Location: ../controllers/UserController.php?action=index');
+            exit;
+        }
     }
 
     /**

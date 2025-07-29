@@ -71,6 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkout-btn-yape')?.addEventListener('click', () => handleCheckout('yape'));
     document.getElementById('checkout-btn-plin')?.addEventListener('click', () => handleCheckout('plin'));
 
+    // Aplicar cupón
+    document.getElementById('apply-coupon-btn')?.addEventListener('click', () => {
+        const couponCode = document.getElementById('coupon-code').value;
+        if (couponCode) {
+            // Lógica para verificar y aplicar el cupón (simulación)
+            alert(`Cupón "${couponCode}" aplicado.`);
+        }
+    });
+
     // Manejo del modo oscuro
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle?.addEventListener('click', () => {

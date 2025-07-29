@@ -15,6 +15,7 @@ Lang::load(Session::get('lang') ?? 'es');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo Lang::get('login'); ?></title>
+    <link rel="manifest" href="../manifest.json">
     <!-- Incluir Bootstrap CSS -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 </head>
@@ -48,5 +49,16 @@ Lang::load(Session::get('lang') ?? 'es');
     </div>
     <!-- Incluir Bootstrap JS -->
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../sw.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito:', registration);
+                })
+                .catch(error => {
+                    console.log('Error al registrar el Service Worker:', error);
+                });
+        }
+    </script>
 </body>
 </html>

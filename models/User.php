@@ -40,13 +40,24 @@ class User {
      * @param string $rol The user's role.
      * @return bool True on success, false on failure.
      */
-    public function create($nombre_usuario, $email, $password, $rol) {
+    public function create($nombre_usuario, $email, $password, $rol, $referrer_id = null) {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $referral_code = $this->generateReferralCode();
         $stmt = $this->pdo->prepare(
-            "INSERT INTO usuarios (nombre_usuario, email, password_hash, rol, estado)
-             VALUES (?, ?, ?, ?, 'activo')"
+            "INSERT INTO usuarios (nombre_usuario, email, password_hash, rol, estado, referrer_id, referral_code)
+             VALUES (?, ?, ?, ?, 'activo', ?, ?)"
         );
-        return $stmt->execute([$nombre_usuario, $email, $password_hash, $rol]);
+        return $stmt->execute([$nombre_usuario, $email, $password_hash, $rol, $referrer_id, $referral_code]);
+    }
+
+    private function generateReferralCode($length = 8) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
     /**
@@ -236,6 +247,12 @@ class User {
         $sql .= " GROUP BY u.nombre_usuario ORDER BY total_ventas DESC LIMIT 10";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getReferredUsers($user_id) {
+        $stmt = $this->pdo->prepare("SELECT id, nombre_usuario, email, fecha_creacion FROM usuarios WHERE referrer_id = ?");
+        $stmt->execute([$user_id]);
         return $stmt->fetchAll();
     }
 }
